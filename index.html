@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LocaONG | Encontre uma ONG e fale com ela</title>
+  <meta name="description" content="Encontre ONGs por cidade ou causa e veja telefone, WhatsApp, e-mail e endereço.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Biblioteca de ícones: cada ícone é usado com <use href="#nome"> -->
+  <svg class="icones" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icone-animais" viewBox="0 0 24 24">
+      <circle cx="5.5" cy="11" r="2"/><circle cx="9.500" cy="6.500" r="2"/><circle cx="14.500" cy="6.500" r="2"/><circle cx="18.500" cy="11" r="2"/>
+      <path d="M12 12c-3 0-5.500 3-5.500 5.500 0 1.700 1.300 2.500 2.800 2.500 1 0 1.800-.5 2.700-.5s1.700.5 2.700.5c1.500 0 2.800-.8 2.800-2.500C17.500 15 15 12 12 12Z"/>
+    </symbol>
+    <symbol id="icone-educacao" viewBox="0 0 24 24">
+      <path d="M4 5.500A2.500 2.500 0 0 1 6.500 3H20v15H6.500A2.500 2.500 0 0 0 4 20.500v-15Z"/><path d="M4 20.500A2.500 2.500 0 0 0 6.500 21H20v-3"/>
+    </symbol>
+    <symbol id="icone-ambiente" viewBox="0 0 24 24">
+      <path d="M5 19C5 11 10 5 20 4c0 10-5 15-12 15-1 0-2-.2-3 0Z"/><path d="M4 21c1.500-5 4.500-8 9-10"/>
+    </symbol>
+    <symbol id="icone-alimentacao" viewBox="0 0 24 24">
+      <path d="M7 3v18"/><path d="M4 3v5a3 3 0 0 0 6 0V3"/><path d="M17 21V3c-2 1-3 4-3 7 0 2 1 3 3 3"/>
+    </symbol>
+    <symbol id="icone-saude" viewBox="0 0 24 24">
+      <path d="M20.500 8.500c0 6-8.500 11.500-8.500 11.500S3.500 14.500 3.500 8.500A4.500 4.500 0 0 1 12 6.500a4.500 4.500 0 0 1 8.500 2Z"/>
+    </symbol>
+    <symbol id="icone-moradia" viewBox="0 0 24 24">
+      <path d="m3 11 9-8 9 8"/><path d="M5 9.500V21h14V9.500"/><path d="M10 21v-6h4v6"/>
+    </symbol>
+    <symbol id="icone-mulheres" viewBox="0 0 24 24">
+      <circle cx="12" cy="9.500" r="5.500"/><path d="M12 15v7"/><path d="M9 19h6"/>
+    </symbol>
+    <symbol id="icone-idosos" viewBox="0 0 24 24">
+      <circle cx="9" cy="7" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><path d="M16 3.500a4 4 0 0 1 0 7.500"/><path d="M22 21c0-3-1.500-5-4-5.700"/>
+    </symbol>
+    <symbol id="icone-telefone" viewBox="0 0 24 24">
+      <path d="M21 16.500v3a2 2 0 0 1-2.200 2A18 18 0 0 1 2.500 5.200 2 2 0 0 1 4.500 3h3a2 2 0 0 1 2 1.700c.1 1 .4 1.900.7 2.800a2 2 0 0 1-.5 2.100L8.500 10.800a15 15 0 0 0 4.700 4.700l1.200-1.200a2 2 0 0 1 2.100-.5c.9.300 1.800.6 2.800.7a2 2 0 0 1 1.700 2Z"/>
+    </symbol>
+    <symbol id="icone-whatsapp" viewBox="0 0 24 24">
+      <path d="M21 11.500a8.500 8.500 0 0 1-12.500 7.500L3 21l2-5.500A8.500 8.500 0 1 1 21 11.500Z"/>
+    </symbol>
+    <symbol id="icone-email" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>
+    </symbol>
+    <symbol id="icone-site" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.500 2.500 4 5.700 4 9s-1.500 6.500-4 9c-2.500-2.500-4-5.700-4-9s1.500-6.500 4-9Z"/>
+    </symbol>
+    <symbol id="icone-endereco" viewBox="0 0 24 24">
+      <path d="M12 22s8-6.600 8-13A8 8 0 0 0 4 9c0 6.400 8 13 8 13Z"/><circle cx="12" cy="9" r="3"/>
+    </symbol>
+    <symbol id="icone-horario" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+    </symbol>
+    <symbol id="icone-fechar" viewBox="0 0 24 24">
+      <path d="M6 6l12 12"/><path d="M18 6 6 18"/>
+    </symbol>
+  </svg>
+
+  <a class="pular" href="#ongs">Ir para a lista de ONGs</a>
+
+  <header class="topo">
+    <div class="container topo-conteudo">
+      <a class="logo" href="#inicio" aria-label="LocaONG, início">
+        <svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 22s8-6.600 8-13A8 8 0 0 0 4 9c0 6.400 8 13 8 13Z" fill="#0A6B3D"/>
+          <path d="M12 13.500s-3.600-2.200-3.600-4.800A2 2 0 0 1 12 7.600a2 2 0 0 1 3.600 1.100c0 2.600-3.600 4.800-3.600 4.800Z" fill="#FFFFFF"/>
+        </svg>
+        <span>Loca<strong>ONG</strong></span>
+      </a>
+      <nav aria-label="Principal">
+        <a href="#causas">Causas</a>
+        <a href="#ongs">ONGs</a>
+        <a href="#cidades">Cidades</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container">
+        <h1>Encontre uma ONG e fale direto com ela</h1>
+        <p>Busque por cidade, nome ou causa e veja telefone, WhatsApp, e-mail e endereço.</p>
+
+        <form class="busca" id="form-busca" role="search">
+          <div class="campo">
+            <label for="campo-texto">Cidade ou nome da ONG</label>
+            <input id="campo-texto" type="search" list="lista-cidades" placeholder="Ex.: Recife" autocomplete="off">
+            <datalist id="lista-cidades"></datalist>
+          </div>
+          <div class="campo">
+            <label for="campo-causa">Causa</label>
+            <select id="campo-causa">
+              <option value="">Todas as causas</option>
+            </select>
+          </div>
+          <button class="botao botao-destaque" type="submit">Buscar ONGs</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="secao" id="causas" aria-labelledby="titulo-causas">
+      <div class="container">
+        <h2 id="titulo-causas">Busque por causa</h2>
+        <div class="grade-causas" id="grade-causas"></div>
+      </div>
+    </section>
+
+    <section class="secao secao-suave" id="ongs" aria-labelledby="titulo-ongs">
+      <div class="container">
+        <div class="ongs-cabecalho">
+          <div>
+            <h2 id="titulo-ongs" aria-live="polite"></h2>
+            <!-- Apague a linha abaixo quando colocar os dados reais no script.js -->
+            <p class="aviso-exemplo">Dados de exemplo: estas ONGs e contatos são fictícios.</p>
+          </div>
+          <button class="botao botao-contorno" id="botao-limpar" type="button" hidden>Limpar busca</button>
+        </div>
+
+        <ul class="grade-ongs" id="lista-ongs"></ul>
+
+        <div class="vazio" id="vazio" hidden>
+          <h3>Nenhuma ONG encontrada</h3>
+          <p>Tente buscar outra cidade ou escolher outra causa.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="secao" id="cidades" aria-labelledby="titulo-cidades">
+      <div class="container">
+        <h2 id="titulo-cidades">ONGs por cidade</h2>
+        <div class="lista-cidades" id="botoes-cidades"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="container">
+      <p>O LocaONG apenas reúne os contatos das ONGs. Qualquer ajuda ou doação é combinada diretamente com cada organização.</p>
+      <p>Sua ONG não está aqui ou algum dado mudou? Escreva para [seu e-mail].</p>
+    </div>
+  </footer>
+
+  <!-- Janela com todos os contatos da ONG -->
+  <dialog class="detalhes" id="detalhes" aria-labelledby="detalhes-nome">
+    <div class="detalhes-topo">
+      <span class="ong-icone"><svg aria-hidden="true"><use id="detalhes-icone" href=""></use></svg></span>
+      <div class="detalhes-titulo">
+        <h2 id="detalhes-nome"></h2>
+        <p id="detalhes-subtitulo"></p>
+      </div>
+      <form method="dialog">
+        <button class="botao-fechar" type="submit" aria-label="Fechar">
+          <svg aria-hidden="true"><use href="#icone-fechar"></use></svg>
+        </button>
+      </form>
+    </div>
+    <p class="detalhes-desc" id="detalhes-desc"></p>
+    <ul class="contatos" id="detalhes-contatos"></ul>
+    <div class="detalhes-acoes">
+      <a class="botao botao-principal" id="detalhes-ligar" href="">Ligar</a>
+      <button class="botao botao-contorno" id="detalhes-copiar" type="button">Copiar número</button>
+    </div>
+  </dialog>
+
+  <!-- Modelos usados pelo script.js para montar a página -->
+  <template id="modelo-card">
+    <li class="card">
+      <div class="card-topo">
+        <span class="ong-icone"><svg aria-hidden="true"><use></use></svg></span>
+        <div>
+          <h3 class="card-nome"></h3>
+          <p class="card-causa"></p>
+        </div>
+      </div>
+      <p class="card-local"></p>
+      <p class="card-desc"></p>
+      <a class="card-telefone">
+        <svg aria-hidden="true"><use href="#icone-telefone"></use></svg>
+        <span></span>
+      </a>
+      <div class="card-acoes">
+        <a class="botao botao-principal card-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+        <button class="botao botao-contorno card-detalhes" type="button">Ver contatos</button>
+      </div>
+    </li>
+  </template>
+
+  <template id="modelo-contato">
+    <li>
+      <svg aria-hidden="true"><use></use></svg>
+      <div>
+        <span class="contato-rotulo"></span>
+        <span class="contato-valor"></span>
+      </div>
+    </li>
+  </template>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
