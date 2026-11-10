@@ -12,7 +12,7 @@
 </head>
 <body>
 
-  <!-- Biblioteca de ícones: cada ícone é usado com <use href="#nome"> -->
+  <!-- Biblioteca de ícones -->
   <svg class="icones" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
     <symbol id="icone-animais" viewBox="0 0 24 24">
       <circle cx="5.5" cy="11" r="2"/><circle cx="9.500" cy="6.500" r="2"/><circle cx="14.500" cy="6.500" r="2"/><circle cx="18.500" cy="11" r="2"/>
@@ -77,6 +77,7 @@
         <a href="#causas">Causas</a>
         <a href="#ongs">ONGs</a>
         <a href="#cidades">Cidades</a>
+        <a href="#cadastrar">Cadastrar ONG</a>
       </nav>
     </div>
   </header>
@@ -116,8 +117,6 @@
         <div class="ongs-cabecalho">
           <div>
             <h2 id="titulo-ongs" aria-live="polite"></h2>
-            <!-- Apague a linha abaixo quando colocar os dados reais no script.js -->
-            <p class="aviso-exemplo">Dados de exemplo: estas ONGs e contatos são fictícios.</p>
           </div>
           <button class="botao botao-contorno" id="botao-limpar" type="button" hidden>Limpar busca</button>
         </div>
@@ -137,12 +136,82 @@
         <div class="lista-cidades" id="botoes-cidades"></div>
       </div>
     </section>
+
+    <!-- Seção de Cadastro de Nova ONG -->
+    <section class="secao secao-suave" id="cadastrar">
+      <div class="container">
+        <h2>Cadastrar Nova ONG</h2>
+        <p class="aviso-exemplo" style="margin-bottom: 16px;">Preencha os dados abaixo para adicionar sua organização ao sistema.</p>
+        <form id="form-cadastro" class="busca" style="grid-template-columns: 1fr 1fr; margin-top: 0;">
+          <div class="campo">
+            <label for="cad-nome">Nome da ONG*</label>
+            <input type="text" id="cad-nome" required placeholder="Ex.: Patas e Resgates">
+          </div>
+
+          <div class="campo">
+            <label for="cad-causa">Causa (Categoria)*</label>
+            <select id="cad-causa" required>
+              <option value="">Selecione uma causa</option>
+              <option value="animais">Animais</option>
+              <option value="educacao">Crianças e educação</option>
+              <option value="ambiente">Meio ambiente</option>
+              <option value="alimentacao">Alimentação</option>
+              <option value="saude">Saúde</option>
+              <option value="moradia">Moradia</option>
+              <option value="mulheres">Mulheres</option>
+              <option value="idosos">Pessoas idosas</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="cad-cidade">Cidade*</label>
+            <input type="text" id="cad-cidade" required placeholder="Ex.: Recife">
+          </div>
+
+          <div class="campo">
+            <label for="cad-uf">Estado (UF)*</label>
+            <input type="text" id="cad-uf" maxlength="2" required placeholder="Ex.: PE">
+          </div>
+
+          <div class="campo">
+            <label for="cad-telefone">Telefone</label>
+            <input type="tel" id="cad-telefone" placeholder="(81) 3333-4444">
+          </div>
+
+          <div class="campo">
+            <label for="cad-whatsapp">WhatsApp</label>
+            <input type="tel" id="cad-whatsapp" placeholder="(81) 90000-0000">
+          </div>
+
+          <div class="campo">
+            <label for="cad-email">E-mail de Contato</label>
+            <input type="email" id="cad-email" placeholder="contato@ong.org">
+          </div>
+
+          <div class="campo">
+            <label for="cad-site">Site (URL)</label>
+            <input type="url" id="cad-site" placeholder="https://ong.org">
+          </div>
+
+          <div class="campo" style="grid-column: 1 / -1;">
+            <label for="cad-endereco">Endereço Completo</label>
+            <input type="text" id="cad-endereco" placeholder="Rua Exemplo, 123, Bairro">
+          </div>
+
+          <div class="campo" style="grid-column: 1 / -1;">
+            <label for="cad-descricao">Descrição da ONG</label>
+            <textarea id="cad-descricao" rows="3" style="width: 100%; border: 1px solid var(--borda-forte); border-radius: var(--raio-pequeno); padding: 10px; font: inherit;" placeholder="Fale um pouco sobre o trabalho da ONG..."></textarea>
+          </div>
+
+          <button type="submit" class="botao botao-destaque" style="grid-column: 1 / -1;">Cadastrar ONG</button>
+        </form>
+      </div>
+    </section>
   </main>
 
   <footer class="rodape">
     <div class="container">
       <p>O LocaONG apenas reúne os contatos das ONGs. Qualquer ajuda ou doação é combinada diretamente com cada organização.</p>
-      <p>Sua ONG não está aqui ou algum dado mudou? Escreva para [seu e-mail].</p>
     </div>
   </footer>
 
@@ -168,7 +237,7 @@
     </div>
   </dialog>
 
-  <!-- Modelos usados pelo script.js para montar a página -->
+  <!-- Modelos usados pelo script.js -->
   <template id="modelo-card">
     <li class="card">
       <div class="card-topo">
@@ -201,6 +270,8 @@
     </li>
   </template>
 
+  <!-- SDK oficial do Supabase via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js" defer></script>
 </body>
 </html>
