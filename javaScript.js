@@ -3,8 +3,8 @@
    ========================================================== */
 
 // COLE SUAS CREDENCIAIS DO SUPABASE AQUI:
-const SUPABASE_URL = 'SUA_URL_DO_SUPABASE_AQUI';
-const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANON_AQUI';
+const SUPABASE_URL = 'https://zcxmkfehmxcolfmhhtun.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_qMMe-5-wEOYd8mU6FkZTmQ_8g0vQuuL';
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
