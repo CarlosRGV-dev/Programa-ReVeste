@@ -2,7 +2,7 @@
    LocaONG: lógica do site integrada ao Supabase
    ========================================================== */
 
-// COLE SUAS CREDENCIAIS DO SUPABASE AQUI:
+// SUAS CREDENCIAIS DO SUPABASE:
 const SUPABASE_URL = 'https://zcxmkfehmxcolfmhhtun.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_qMMe-5-wEOYd8mU6FkZTmQ_8g0vQuuL';
 
@@ -273,7 +273,6 @@ function montarCidades() {
 
 async function inicializarApp() {
   try {
-    // Busca os dados da View que criamos no banco
     const { data, error } = await supabaseClient
       .from('ongs_view')
       .select('*');
@@ -331,7 +330,10 @@ if (formCadastro) {
         .select()
         .single();
 
-      if (orgError) throw orgError;
+      if (orgError) {
+        console.error('Erro na tabela organizations:', orgError);
+        throw orgError;
+      }
       const orgId = orgData.id;
 
       // 2. Insere a localização na tabela 'organization_locations'
@@ -349,17 +351,24 @@ if (formCadastro) {
           }
         ]);
 
-      if (locError) throw locError;
+      if (locError) {
+        console.error('Erro na tabela organization_locations:', locError);
+        throw locError;
+      }
 
       // 3. Busca o ID da categoria correspondente e faz a relação
-      const { data: catData } = await supabaseClient
+      const { data: catData, error: catError } = await supabaseClient
         .from('categories')
         .select('id')
         .eq('slug', causaSlug)
         .maybeSingle();
 
+      if (catError) {
+        console.error('Erro ao buscar categoria:', catError);
+      }
+
       if (catData) {
-        await supabaseClient
+        const { error: relError } = await supabaseClient
           .from('organization_categories')
           .insert([
             {
@@ -367,6 +376,10 @@ if (formCadastro) {
               category_id: catData.id
             }
           ]);
+        
+        if (relError) {
+          console.error('Erro na tabela organization_categories:', relError);
+        }
       }
 
       alert('ONG cadastrada com sucesso!');
@@ -377,8 +390,8 @@ if (formCadastro) {
       secaoOngs.scrollIntoView();
 
     } catch (erro) {
-      console.error('Erro ao cadastrar ONG:', erro);
-      alert('Erro ao realizar o cadastro. Verifique o console para mais detalhes.');
+      console.error('Erro geral ao cadastrar ONG:', erro);
+      alert('Erro ao realizar o cadastro. Pressione F12 e olhe o Console para ver o detalhe do erro.');
     }
   });
 }
