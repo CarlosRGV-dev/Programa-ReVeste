@@ -1,16 +1,12 @@
 /* ==========================================================
-   LocaONG: lógica do site
-
-   COMO TROCAR OS DADOS
-   Edite a lista ONGS abaixo. Cada ONG é um bloco { ... }.
-   - telefone e whatsapp: escreva com DDD, ex.: "(81) 3333-4444"
-   - whatsapp, email, site e horario são opcionais: deixe "" se
-     a ONG não tiver, e a linha não aparece no site.
-   - causa: precisa ser uma das chaves da lista CAUSAS.
-
-   Atenção: os dados abaixo são FICTÍCIOS. Os números começam
-   com zero de propósito, para não ligar para ninguém.
+   LocaONG: lógica do site integrada ao Supabase
    ========================================================== */
+
+// COLE SUAS CREDENCIAIS DO SUPABASE AQUI:
+const SUPABASE_URL = 'SUA_URL_DO_SUPABASE_AQUI';
+const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANON_AQUI';
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const CAUSAS = {
   animais: "Animais",
@@ -23,164 +19,8 @@ const CAUSAS = {
   idosos: "Pessoas idosas",
 };
 
-const ONGS = [
-  {
-    nome: "Patas Exemplo",
-    causa: "animais",
-    cidade: "São Paulo",
-    uf: "SP",
-    descricao: "Resgate e adoção de cães e gatos.",
-    telefone: "(11) 0000-0001",
-    whatsapp: "(11) 00000-0001",
-    email: "contato@patas.example",
-    site: "https://patas.example",
-    endereco: "Rua Exemplo, 100, Centro",
-    horario: "Seg. a sex., das 9h às 17h",
-  },
-  {
-    nome: "Leitura Exemplo",
-    causa: "educacao",
-    cidade: "Belo Horizonte",
-    uf: "MG",
-    descricao: "Reforço escolar e clube de leitura para crianças.",
-    telefone: "(31) 0000-0002",
-    whatsapp: "(31) 00000-0002",
-    email: "contato@leitura.example",
-    site: "https://leitura.example",
-    endereco: "Avenida Exemplo, 200, Savassi",
-    horario: "Seg. a sex., das 8h às 18h",
-  },
-  {
-    nome: "Mata Exemplo",
-    causa: "ambiente",
-    cidade: "Curitiba",
-    uf: "PR",
-    descricao: "Mutirões de plantio e limpeza de rios.",
-    telefone: "(41) 0000-0003",
-    whatsapp: "(41) 00000-0003",
-    email: "contato@mata.example",
-    site: "https://mata.example",
-    endereco: "Rua Exemplo, 300, Batel",
-    horario: "Ter. a sáb., das 9h às 16h",
-  },
-  {
-    nome: "Prato Exemplo",
-    causa: "alimentacao",
-    cidade: "Salvador",
-    uf: "BA",
-    descricao: "Cozinha comunitária e entrega de cestas básicas.",
-    telefone: "(71) 0000-0004",
-    whatsapp: "(71) 00000-0004",
-    email: "contato@prato.example",
-    site: "",
-    endereco: "Rua Exemplo, 400, Barra",
-    horario: "Seg. a sáb., das 8h às 14h",
-  },
-  {
-    nome: "Cuidar Exemplo",
-    causa: "saude",
-    cidade: "Recife",
-    uf: "PE",
-    descricao: "Acompanhamento de pacientes em tratamento.",
-    telefone: "(81) 0000-0005",
-    whatsapp: "(81) 00000-0005",
-    email: "contato@cuidar.example",
-    site: "https://cuidar.example",
-    endereco: "Avenida Exemplo, 500, Boa Vista",
-    horario: "Seg. a sex., das 8h às 17h",
-  },
-  {
-    nome: "Lar Exemplo",
-    causa: "moradia",
-    cidade: "Rio de Janeiro",
-    uf: "RJ",
-    descricao: "Reforma de casas de famílias em situação vulnerável.",
-    telefone: "(21) 0000-0006",
-    whatsapp: "",
-    email: "contato@lar.example",
-    site: "https://lar.example",
-    endereco: "Rua Exemplo, 600, Tijuca",
-    horario: "Seg. a sex., das 9h às 18h",
-  },
-  {
-    nome: "Elas Exemplo",
-    causa: "mulheres",
-    cidade: "Porto Alegre",
-    uf: "RS",
-    descricao: "Acolhimento e orientação jurídica para mulheres.",
-    telefone: "(51) 0000-0007",
-    whatsapp: "(51) 00000-0007",
-    email: "contato@elas.example",
-    site: "https://elas.example",
-    endereco: "Rua Exemplo, 700, Cidade Baixa",
-    horario: "Seg. a sex., das 9h às 17h",
-  },
-  {
-    nome: "Vovós Exemplo",
-    causa: "idosos",
-    cidade: "Fortaleza",
-    uf: "CE",
-    descricao: "Visitas e atividades para pessoas idosas.",
-    telefone: "(85) 0000-0008",
-    whatsapp: "(85) 00000-0008",
-    email: "",
-    site: "",
-    endereco: "Rua Exemplo, 800, Aldeota",
-    horario: "Seg. a sex., das 8h às 16h",
-  },
-  {
-    nome: "Bichos Exemplo",
-    causa: "animais",
-    cidade: "Brasília",
-    uf: "DF",
-    descricao: "Lar temporário e castração de animais de rua.",
-    telefone: "(61) 0000-0009",
-    whatsapp: "(61) 00000-0009",
-    email: "contato@bichos.example",
-    site: "https://bichos.example",
-    endereco: "Quadra Exemplo, 900, Asa Sul",
-    horario: "Sáb. e dom., das 9h às 15h",
-  },
-  {
-    nome: "Saber Exemplo",
-    causa: "educacao",
-    cidade: "São Paulo",
-    uf: "SP",
-    descricao: "Cursinho comunitário para jovens da periferia.",
-    telefone: "(11) 0000-0010",
-    whatsapp: "(11) 00000-0010",
-    email: "contato@saber.example",
-    site: "https://saber.example",
-    endereco: "Rua Exemplo, 1000, Itaquera",
-    horario: "Seg. a sex., das 14h às 21h",
-  },
-  {
-    nome: "Rio Limpo Exemplo",
-    causa: "ambiente",
-    cidade: "Recife",
-    uf: "PE",
-    descricao: "Educação ambiental e coleta de lixo nas margens.",
-    telefone: "(81) 0000-0011",
-    whatsapp: "(81) 00000-0011",
-    email: "contato@riolimpo.example",
-    site: "",
-    endereco: "Rua Exemplo, 1100, Casa Forte",
-    horario: "Seg. a sex., das 9h às 16h",
-  },
-  {
-    nome: "Sopa Exemplo",
-    causa: "alimentacao",
-    cidade: "São Paulo",
-    uf: "SP",
-    descricao: "Distribuição de refeições para pessoas em situação de rua.",
-    telefone: "(11) 0000-0012",
-    whatsapp: "(11) 00000-0012",
-    email: "contato@sopa.example",
-    site: "https://sopa.example",
-    endereco: "Rua Exemplo, 1200, Sé",
-    horario: "Todos os dias, das 17h às 21h",
-  },
-];
+// Variável global que receberá as ONGs vindas do banco de dados
+let ONGS = [];
 
 /* ---------- Elementos da página ---------- */
 const formBusca = document.getElementById("form-busca");
@@ -195,22 +35,24 @@ const botoesCidades = document.getElementById("botoes-cidades");
 const secaoOngs = document.getElementById("ongs");
 const janela = document.getElementById("detalhes");
 const botaoCopiar = document.getElementById("detalhes-copiar");
+const formCadastro = document.getElementById("form-cadastro");
 
 const modeloCard = document.getElementById("modelo-card");
 const modeloContato = document.getElementById("modelo-contato");
 
 /* ---------- Funções de apoio ---------- */
 
-// Tira acentos e maiúsculas: "São Paulo" e "sao paulo" viram o mesmo texto
 function normalizar(texto) {
+  if (!texto) return "";
   return texto
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .trim();
 }
 
 function somenteDigitos(texto) {
+  if (!texto) return "";
   return texto.replace(/\D/g, "");
 }
 
@@ -223,17 +65,20 @@ function linkWhatsapp(numero) {
 }
 
 function iconeDaCausa(causa) {
-  return "#icone-" + causa;
+  return "#icone-" + (causa || "animais");
 }
 
-/* ---------- Busca ---------- */
+/* ---------- Busca no Front-end ---------- */
 
 function buscarOngs() {
   const texto = normalizar(campoTexto.value);
   const causa = campoCausa.value;
 
   return ONGS.filter(function (ong) {
-    const ondeProcurar = normalizar(ong.nome + " " + ong.cidade + " " + ong.uf);
+    const nome = ong.nome || "";
+    const cidade = ong.cidade || "";
+    const uf = ong.uf || "";
+    const ondeProcurar = normalizar(nome + " " + cidade + " " + uf);
     return ondeProcurar.includes(texto) && (causa === "" || ong.causa === causa);
   });
 }
@@ -270,14 +115,18 @@ function criarCard(ong) {
 
   card.querySelector(".ong-icone use").setAttribute("href", iconeDaCausa(ong.causa));
   card.querySelector(".card-nome").textContent = ong.nome;
-  card.querySelector(".card-causa").textContent = CAUSAS[ong.causa];
-  card.querySelector(".card-local").textContent = ong.cidade + ", " + ong.uf;
-  card.querySelector(".card-desc").textContent = ong.descricao;
+  card.querySelector(".card-causa").textContent = CAUSAS[ong.causa] || ong.causa;
+  card.querySelector(".card-local").textContent = (ong.cidade || "") + ", " + (ong.uf || "");
+  card.querySelector(".card-desc").textContent = ong.descricao || "";
 
   const telefone = card.querySelector(".card-telefone");
-  telefone.href = linkTelefone(ong.telefone);
-  telefone.setAttribute("aria-label", "Ligar para " + ong.nome + ": " + ong.telefone);
-  telefone.querySelector("span").textContent = ong.telefone;
+  if (ong.telefone) {
+    telefone.href = linkTelefone(ong.telefone);
+    telefone.setAttribute("aria-label", "Ligar para " + ong.nome + ": " + ong.telefone);
+    telefone.querySelector("span").textContent = ong.telefone;
+  } else {
+    telefone.remove();
+  }
 
   const whatsapp = card.querySelector(".card-whatsapp");
   if (ong.whatsapp) {
@@ -323,11 +172,16 @@ function abrirDetalhes(ong) {
   document.getElementById("detalhes-icone").setAttribute("href", iconeDaCausa(ong.causa));
   document.getElementById("detalhes-nome").textContent = ong.nome;
   document.getElementById("detalhes-subtitulo").textContent =
-    CAUSAS[ong.causa] + " · " + ong.cidade + ", " + ong.uf;
-  document.getElementById("detalhes-desc").textContent = ong.descricao;
-  document.getElementById("detalhes-ligar").href = linkTelefone(ong.telefone);
+    (CAUSAS[ong.causa] || ong.causa) + " · " + (ong.cidade || "") + ", " + (ong.uf || "");
+  document.getElementById("detalhes-desc").textContent = ong.descricao || "";
+  
+  const telLink = ong.telefone ? linkTelefone(ong.telefone) : "#";
+  document.getElementById("detalhes-ligar").href = telLink;
 
-  const linhas = [criarLinhaContato("telefone", "Telefone", ong.telefone, linkTelefone(ong.telefone))];
+  const linhas = [];
+  if (ong.telefone) {
+    linhas.push(criarLinhaContato("telefone", "Telefone", ong.telefone, linkTelefone(ong.telefone)));
+  }
   if (ong.whatsapp) {
     linhas.push(criarLinhaContato("whatsapp", "WhatsApp", ong.whatsapp, linkWhatsapp(ong.whatsapp)));
   }
@@ -335,26 +189,29 @@ function abrirDetalhes(ong) {
     linhas.push(criarLinhaContato("email", "E-mail", ong.email, "mailto:" + ong.email));
   }
   if (ong.site) {
-    linhas.push(criarLinhaContato("site", "Site", ong.site.replace("https://", ""), ong.site));
+    linhas.push(criarLinhaContato("site", "Site", ong.site.replace("https://", "").replace("http://", ""), ong.site));
   }
-  linhas.push(criarLinhaContato("endereco", "Endereço", ong.endereco + " · " + ong.cidade + ", " + ong.uf));
+  if (ong.endereco) {
+    linhas.push(criarLinhaContato("endereco", "Endereço", ong.endereco + " · " + (ong.cidade || "") + ", " + (ong.uf || "")));
+  }
   if (ong.horario) {
     linhas.push(criarLinhaContato("horario", "Horário de atendimento", ong.horario));
   }
+  
   document.getElementById("detalhes-contatos").replaceChildren(...linhas);
 
   botaoCopiar.textContent = "Copiar número";
-  botaoCopiar.dataset.numero = ong.telefone;
+  botaoCopiar.dataset.numero = ong.telefone || "";
   janela.showModal();
 }
 
 async function copiarNumero() {
   const numero = botaoCopiar.dataset.numero;
+  if (!numero) return;
 
   try {
     await navigator.clipboard.writeText(numero);
   } catch (erro) {
-    // Alternativa para navegadores que bloqueiam a área de transferência
     const campo = document.createElement("textarea");
     campo.value = numero;
     janela.append(campo);
@@ -366,15 +223,11 @@ async function copiarNumero() {
   botaoCopiar.textContent = "Número copiado";
 }
 
-/* ---------- Preenchimento inicial ---------- */
+/* ---------- Preenchimento inicial das listas e filtros ---------- */
 
 function montarCausas() {
+  gradeCausas.innerHTML = "";
   Object.entries(CAUSAS).forEach(function ([chave, nome]) {
-    const opcao = document.createElement("option");
-    opcao.value = chave;
-    opcao.textContent = nome;
-    campoCausa.append(opcao);
-
     const botao = document.createElement("button");
     botao.type = "button";
     botao.className = "causa";
@@ -383,7 +236,6 @@ function montarCausas() {
     botao.innerHTML = '<svg aria-hidden="true"><use href="' + iconeDaCausa(chave) + '"></use></svg>';
     botao.append(nome);
     botao.addEventListener("click", function () {
-      // Clicar de novo na causa escolhida tira o filtro
       campoCausa.value = campoCausa.value === chave ? "" : chave;
       atualizarPagina();
       irParaResultados();
@@ -393,8 +245,10 @@ function montarCausas() {
 }
 
 function montarCidades() {
-  const cidades = [...new Set(ONGS.map((ong) => ong.cidade))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+  const cidades = [...new Set(ONGS.map((ong) => ong.cidade).filter(Boolean))].sort((a, b) => a.localeCompare(b, "pt-BR"));
   const listaSugestoes = document.getElementById("lista-cidades");
+  listaSugestoes.innerHTML = "";
+  botoesCidades.innerHTML = "";
 
   cidades.forEach(function (cidade) {
     const sugestao = document.createElement("option");
@@ -415,7 +269,121 @@ function montarCidades() {
   });
 }
 
-/* ---------- Eventos ---------- */
+/* ---------- Comunicação com o Supabase (Carregar dados) ---------- */
+
+async function inicializarApp() {
+  try {
+    // Busca os dados da View que criamos no banco
+    const { data, error } = await supabaseClient
+      .from('ongs_view')
+      .select('*');
+
+    if (error) {
+      console.error('Erro ao buscar ONGs do Supabase:', error);
+      return;
+    }
+
+    ONGS = data || [];
+
+    montarCausas();
+    montarCidades();
+    atualizarPagina();
+
+  } catch (err) {
+    console.error('Erro de conexão:', err);
+  }
+}
+
+/* ---------- Cadastro de nova ONG pelo Site ---------- */
+
+if (formCadastro) {
+  formCadastro.addEventListener('submit', async function (evento) {
+    evento.preventDefault();
+
+    const nome = document.getElementById('cad-nome').value.trim();
+    const causaSlug = document.getElementById('cad-causa').value;
+    const cidade = document.getElementById('cad-cidade').value.trim();
+    const uf = document.getElementById('cad-uf').value.trim().toUpperCase();
+    const telefone = document.getElementById('cad-telefone').value.trim();
+    const whatsapp = document.getElementById('cad-whatsapp').value.trim();
+    const email = document.getElementById('cad-email').value.trim();
+    const site = document.getElementById('cad-site').value.trim();
+    const endereco = document.getElementById('cad-endereco').value.trim();
+    const descricao = document.getElementById('cad-descricao').value.trim();
+
+    const slug = nome.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
+    try {
+      // 1. Insere na tabela principal 'organizations'
+      const { data: orgData, error: orgError } = await supabaseClient
+        .from('organizations')
+        .insert([
+          {
+            name: nome,
+            slug: slug,
+            description: descricao,
+            contact_email: email,
+            website_url: site,
+            status: 'active',
+            is_verified: true
+          }
+        ])
+        .select()
+        .single();
+
+      if (orgError) throw orgError;
+      const orgId = orgData.id;
+
+      // 2. Insere a localização na tabela 'organization_locations'
+      const { error: locError } = await supabaseClient
+        .from('organization_locations')
+        .insert([
+          {
+            organization_id: orgId,
+            city: cidade,
+            state: uf,
+            address_line: endereco,
+            phone: telefone,
+            whatsapp: whatsapp,
+            is_primary: true
+          }
+        ]);
+
+      if (locError) throw locError;
+
+      // 3. Busca o ID da categoria correspondente e faz a relação
+      const { data: catData } = await supabaseClient
+        .from('categories')
+        .select('id')
+        .eq('slug', causaSlug)
+        .maybeSingle();
+
+      if (catData) {
+        await supabaseClient
+          .from('organization_categories')
+          .insert([
+            {
+              organization_id: orgId,
+              category_id: catData.id
+            }
+          ]);
+      }
+
+      alert('ONG cadastrada com sucesso!');
+      formCadastro.reset();
+
+      // Recarrega os dados e atualiza a listagem na tela
+      await inicializarApp();
+      secaoOngs.scrollIntoView();
+
+    } catch (erro) {
+      console.error('Erro ao cadastrar ONG:', erro);
+      alert('Erro ao realizar o cadastro. Verifique o console para mais detalhes.');
+    }
+  });
+}
+
+/* ---------- Eventos gerais ---------- */
 
 campoTexto.addEventListener("input", atualizarPagina);
 campoCausa.addEventListener("change", atualizarPagina);
@@ -433,7 +401,6 @@ botaoLimpar.addEventListener("click", function () {
 
 botaoCopiar.addEventListener("click", copiarNumero);
 
-// Clicar fora da janela também fecha
 janela.addEventListener("click", function (evento) {
   const area = janela.getBoundingClientRect();
   const clicouFora =
@@ -447,6 +414,5 @@ janela.addEventListener("click", function (evento) {
   }
 });
 
-montarCausas();
-montarCidades();
-atualizarPagina();
+// Inicializa a aplicação buscando do banco
+inicializarApp();
