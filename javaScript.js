@@ -323,7 +323,7 @@ if (formCadastro) {
             description: descricao,
             contact_email: email,
             website_url: site,
-            status: 'active',
+            status: 'ativo', // <-- ALTERADO DE 'active' PARA 'ativo'
             is_verified: true
           }
         ])
